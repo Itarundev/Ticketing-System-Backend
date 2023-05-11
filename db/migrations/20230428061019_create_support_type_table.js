@@ -5,7 +5,8 @@
 exports.up = function(knex) {
     return knex.schema.createTable('support_type', function(table) {
       table.increments('id').primary();
-      table.text('type');
+      table.string('category');
+      table.string('category_type');
     });
   };
 

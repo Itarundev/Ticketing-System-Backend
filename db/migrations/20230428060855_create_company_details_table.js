@@ -12,8 +12,8 @@ exports.up = function(knex) {
       table.json('address');
       table.string('email').unique();
       table.string('password');
-      table.boolean('isAdmin').defaultTo(false);
-      table.integer('createdBy');
+      table.boolean('is_admin').defaultTo(false);
+      table.integer('created_by_id');
       table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
       table.timestamp('updated_at').notNullable().defaultTo(knex.fn.now());
     });

@@ -1,16 +1,18 @@
 exports.up = function(knex) {
     return knex.schema.createTable('tickets', function(table) {
       table.increments('id').primary();
-      table.integer('support_type').notNullable();;
-      table.integer('support_relatedto').notNullable();;
-      table.string('title').notNullable();;
-      table.text('description').notNullable();;
-      table.text('facing_issue_on').notNullable();;
+      table.string('project_name').index();
+      table.string('support_type').notNullable();
+      table.string('support_related_to').notNullable();
+      table.string('title').notNullable();
+      table.text('description').notNullable();
+      table.string('facing_issue_on').notNullable;
       table.json('image');
-      table.integer('createdBy').notNullable();;
+      table.integer('created_by_id').notNullable();
+      table.string('created_by_name').notNullable().index();
       table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
       table.timestamp('updated_at').notNullable().defaultTo(knex.fn.now());
-      table.enu('status', ['pending', 'inprogress', 'resolved']).notNullable().defaultTo('pending');
+      table.enu('status', ['Pending', 'In Progress', 'Resolved']).notNullable().defaultTo('Pending');
     });
   };
   

@@ -5,7 +5,7 @@
 exports.up = function(knex) {
     return knex.schema.createTable('facing_issue_on', function(table) {
       table.increments('id').primary();
-      table.text('issues');
+      table.string('issues');
     });
   };
 

@@ -9,6 +9,8 @@ exports.up = function(knex) {
       table.json('image');
       table.integer('ticket_id');
       table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
+      table.integer('created_by_id').notNullable();
+      table.string('created_by_name').notNullable();
     });
   };
 
