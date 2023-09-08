@@ -291,7 +291,9 @@ const createTicketHistory = async (req, res) => {
       comment,
       image: images ? JSON.stringify(images.map((image) => ({ url: path.join('uploads', image.filename) }))) : null,
       ticket_id,
-      created_by: decoded.company.id,
+      created_by_id: decoded.company.id,
+      created_by_name: decoded.company.brand_name
+
     });
 
     // Send response

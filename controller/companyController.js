@@ -195,7 +195,7 @@ const login = async (req, res) => {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
     // Create JWT token
-    const token = jwt.sign({ company:company}, JWT_SECRET, { expiresIn: '1d' });
+    const token = jwt.sign({ company:company}, JWT_SECRET);
     // Remove password from company object
     delete company.password;
     // Return company object and token
