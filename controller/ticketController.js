@@ -47,7 +47,7 @@ const createTicket = async (req, res) => {
 // Updating a ticket
 const updateTicket = async (req, res) => {
   const ticketId = req.params.id;
-  const { support_type, support_related_to, title, description, facing_issue_on, status } = req.body;
+  const { support_type, support_related_to, title, description, facing_issue_on, status,priority,end_date } = req.body;
 
   // Check if all required fields are provided
   if (!support_type || !support_related_to || !title || !description || !facing_issue_on || !status) {
@@ -75,7 +75,9 @@ const updateTicket = async (req, res) => {
       description,
       facing_issue_on,
       status,
-      updated_at: db.fn.now()
+      updated_at: db.fn.now(),
+      priority,
+      end_date
     });
 
     if (result === 0) {
