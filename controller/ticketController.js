@@ -30,6 +30,7 @@ const createTicket = async (req, res) => {
       image: images ? JSON.stringify(images.map((image) => ({ url: path.join('uploads', image.filename) }))) : null,
       created_by_id: decoded.company.id,
       created_by_name: decoded.company.brand_name,
+      priority,
       project_name
     };
     const result = await db('tickets').insert(ticket);
