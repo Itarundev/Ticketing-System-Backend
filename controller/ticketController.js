@@ -26,6 +26,7 @@ const createTicket = async (req, res) => {
       title,
       description,
       facing_issue_on,
+      end_date,
       image: images ? JSON.stringify(images.map((image) => ({ url: path.join('uploads', image.filename) }))) : null,
       created_by_id: decoded.company.id,
       created_by_name: decoded.company.brand_name,

@@ -8,6 +8,7 @@ exports.up = function(knex) {
       table.text('description').notNullable();
       table.string('facing_issue_on').notNullable;
       table.json('image');
+      table.string('end_date');
       table.integer('created_by_id').notNullable();
       table.string('created_by_name').notNullable().index();
       table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
