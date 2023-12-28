@@ -6,7 +6,7 @@ require('dotenv').config();
 const JWT_SECRET =process.env.JWT_SECRET;
 const createTicket = async (req, res) => {
   try {
-    const { support_type, support_related_to, title, description, facing_issue_on,project_name } = req.body;
+    const { support_type, support_related_to, title, description, facing_issue_on,project_name,end_date } = req.body;
     const images = req.files;
 
     //   // Check if all required fields are provided
