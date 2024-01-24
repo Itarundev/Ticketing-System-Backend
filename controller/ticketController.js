@@ -60,7 +60,7 @@ const createTicket = async (req, res) => {
 
     const companyEmail = await db("company_details")
       .select("email")
-      .where("id", decoded.company.id);
+      .where("project", project_name);
 
       console.log("companyEmail", companyEmail);
       
@@ -75,9 +75,9 @@ const createTicket = async (req, res) => {
       var3: ticket.support_type,
       var4: ticket.support_related_to,
       var5: ticket.description,
-      var6: ticket.priority,
-      var7: ticket.status,
-      var8: ticket.end_date,
+      var6: ticket.priority ? ticket.priority : "Low",
+      var7: ticket.status ? ticket.status : "Pending",
+      var8: ticket.end_date ? ticket.end_date : "N/A",
     };
 
     await sendEmail(
@@ -85,7 +85,7 @@ const createTicket = async (req, res) => {
       [
         "vivek.agrahari@genuinemark.org",
         "rishabh@genuinemark.org",
-        companyEmail,
+        companyEmail.email,
       ],
       newTicketHtmlTemplate.subject,
       newTicketHtmlTemplate.text,
