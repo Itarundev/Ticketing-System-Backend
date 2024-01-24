@@ -13,8 +13,8 @@ exports.up = function(knex) {
       table.string('created_by_name').notNullable().index();
       table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
       table.timestamp('updated_at').notNullable().defaultTo(knex.fn.now());
-      table.enu('status', ['Pending', 'In Progress', 'Resolved']).notNullable().defaultTo('Pending');
-      table.enu('priority', ["Low", "Medium", "High"]).notNullable().defaultTo("Low");
+      table.string('status').notNullable().defaultTo('Pending');
+      table.string('priority').notNullable().defaultTo("Low");
     });
   };
   
