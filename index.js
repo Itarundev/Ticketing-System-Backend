@@ -10,7 +10,7 @@ const {
   deadlineHtmlTemplate,
 } = require("./utils/htmlTemplates/deadlineTemplate");
 const db = require("./db/db");
-const cron = require('node-cron');
+const cron = require("node-cron");
 
 const port = process.env.PORT || 3000;
 
@@ -28,8 +28,8 @@ cron.schedule(
   async () => {
     try {
       const emailTransporter = createEmailTransporter(
-        "utkarsh.vishwakarma@genuinemark.org",
-        "yyjb krgr zstc gklq",
+        process.env.SUPPORT_EMAIL,
+        process.env.SUPPORT_EMAIL_PASSWORD,
       );
 
       const tomorrow = new Date();
@@ -59,7 +59,7 @@ cron.schedule(
 
         await sendEmail(
           emailTransporter,
-            ["vivek.agrahari@genuinemark.org", "rishabh@genuinemark.org"],
+          ["vivek.agrahari@genuinemark.org", "rishabh@genuinemark.org"],
           deadlineHtmlTemplate.subject,
           deadlineHtmlTemplate.text,
           deadlineHtmlTemplate.html_template,
@@ -77,7 +77,7 @@ cron.schedule(
     }
   },
   {
-    timezone: "Asia/Kolkata"
+    timezone: "Asia/Kolkata",
   },
 );
 
