@@ -247,11 +247,13 @@ const getTickets = async (req, res) => {
     }
 
     if (decoded.company.is_admin && Object.keys(filters).length > 0) {
+     
       ticketsQuery = ticketsQuery.where((builder) => {
         Object.entries(filters).forEach(([key, value]) => {
           builder.whereRaw(`lower(${key}) like ?`, [`%${value.toLowerCase()}%`]);
         });
       });
+
     }
 
     // Count the total number of tickets for pagination
@@ -259,11 +261,12 @@ const getTickets = async (req, res) => {
     const countResult = await countQuery;
     const count = countResult?.count ?? 0;
 
+    const developers= db('developers_list').select('*');
     // Retrieve the tickets for the current page
     const tickets = await ticketsQuery.offset(offset).limit(pageSize).groupBy('tickets.id').orderBy('created_at', 'desc');
 
     // Send the tickets and count in the response
-    return res.status(200).json({ tickets, count });
+    return res.status(200).json({ tickets, count,developers });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: 'An error occurred while getting tickets' });
