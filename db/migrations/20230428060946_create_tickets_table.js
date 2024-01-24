@@ -15,6 +15,7 @@ exports.up = function(knex) {
       table.timestamp('updated_at').notNullable().defaultTo(knex.fn.now());
       table.string('status').notNullable().defaultTo('Pending');
       table.string('priority').notNullable().defaultTo("Low");
+      table.string('assigned_to');
     });
   };
   
