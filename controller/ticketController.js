@@ -9,6 +9,10 @@ const createTicket = async (req, res) => {
     const { support_type, support_related_to, title, description, facing_issue_on,project_name,end_date ,priority} = req.body;
     const images = req.files;
 
+
+    const tickets = await db("tickets");
+    console.log("tickets ", tickets);
+
     //   // Check if all required fields are provided
     if (!support_type || !title || !description || !facing_issue_on||!project_name) {
       return res.status(400).json({ message: 'All fields are required' });
