@@ -10,7 +10,7 @@ const createCompany = async (req, res) => {
 
 
   // Check if all required fields are provided
-  if (!email || !password) {
+  if (!email || !password ||!mobile_no) {
     return res.status(400).json({ message: 'All fields are required' });
   }
 
