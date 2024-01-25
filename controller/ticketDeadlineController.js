@@ -27,7 +27,7 @@ const getTicketDeadlineHistory = async (req, res) => {
     const deadlineHistory = await db("deadline_history").where(
       "ticket_id",
       ticketId,
-    );
+    ).orderBy("created_at", "desc");
 
     // Return deadline history as response
     return res.status(201).json({ deadlineHistory : deadlineHistory });
