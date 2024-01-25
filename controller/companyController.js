@@ -301,4 +301,4 @@ const updatePassword = async (req, res) => {
 
 
 
-module.exports = { createCompany ,login , updatePassword,getNonAdminCompanies,deleteCompany,getNotNullProjects};
+module.exports = { createCompany ,login , updatePassword,getNonAdminCompanies,deleteCompany,getNotNullProjects,getAllEmployees};
