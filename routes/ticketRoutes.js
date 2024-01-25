@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const ticketController = require('../controller/ticketController');
+const ticketDeadlineController = require('../controller/ticketDeadlineController');
 const multer = require('multer'); // Add this line
 const path = require('path');
 
@@ -39,6 +40,11 @@ router.get('/facing-issues', ticketController.getFacingIssues);
 // Get all ticket stats
 router.get('/stats', ticketController.getTotalTicketStats);
 
+//create ticket deadline history
+router.post('/deadline', ticketDeadlineController.createDeadlineHistory);
+
+//get ticket deadline history
+router.get('/deadline/:id', ticketDeadlineController.getTicketDeadlineHistory);
 
 
 
