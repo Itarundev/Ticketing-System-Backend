@@ -1,3 +1,5 @@
+const db = require("../db/db");
+
 // Create Deadline History
 const createDeadlineHistory = async (req, res) => {
   const { ticket_id, reason, deadline_date } = req.body;
