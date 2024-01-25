@@ -290,6 +290,7 @@ const updatePassword = async (req, res) => {
     // Update password
     const result = await db('company_details').where({ email }).update({ password: new_passwordHash });
     // Send response
+    // dsddssds
     return res.status(200).json({ message: 'Password updated successfully' });
   } catch (error) {
     console.error(error);
