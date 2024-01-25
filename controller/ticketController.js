@@ -17,6 +17,8 @@ const createTicket = async (req, res) => {
       description,
       facing_issue_on,
       project_name,
+      priority,
+      assigned_to
     } = req.body;
     const images = req.files;
 
@@ -43,6 +45,7 @@ const createTicket = async (req, res) => {
       title,
       description,
       facing_issue_on,
+      priority,
       image: images
         ? JSON.stringify(
             images.map((image) => ({
@@ -53,6 +56,7 @@ const createTicket = async (req, res) => {
       created_by_id: decoded.company.id,
       created_by_name: decoded.company.brand_name,
       project_name,
+      assigned_to
     };
 
     const companyEmail = await db("company_details")
