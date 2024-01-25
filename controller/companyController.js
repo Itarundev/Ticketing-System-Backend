@@ -116,6 +116,7 @@ const getNonAdminCompanies = async (req, res) => {
     // Get all non-admin companies with pagination
     const companies = await db('company_details')
       .where('is_admin', false)
+      .whereNotNull('project')
       .orderBy('id')
       .limit(pageSize)
       .offset(offset);
@@ -123,6 +124,7 @@ const getNonAdminCompanies = async (req, res) => {
     // Get total count of non-admin companies
     const totalCountResult = await db('company_details')
       .where('is_admin', false)
+      .whereNotNull('project')
       .count('id as count')
       .first();
     const totalCount = parseInt(totalCountResult.count);
@@ -134,6 +136,58 @@ const getNonAdminCompanies = async (req, res) => {
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+
+const getAllEmployees = async (req, res) => {
+  try {
+    // Verify admin token
+    const authHeader = req.headers.authorization;
+    const token = authHeader?.split(' ')[1] ?? '';
+    const decoded = jwt.verify(token, JWT_SECRET);
+
+    // Check if user is admin or not
+    const isAdmin = decoded.company.is_admin;
+    if (!isAdmin) {
+      return res.status(403).json({ message: 'Unauthorized access' });
+    }
+
+    // Get page and page size from query parameters
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = parseInt(req.query.limit) || 10;
+
+    // Validate page and page size
+    if (isNaN(page) || isNaN(pageSize) || page < 1 || pageSize < 1) {
+      return res.status(400).json({ message: 'Invalid page or page size' });
+    }
+
+    // Calculate the offset based on page and page size
+    const offset = (page - 1) * pageSize;
+
+    // Get all non-admin companies with pagination
+    const companies = await db('company_details')
+      .where('is_admin', false)
+      .whereNull('project')
+      .orderBy('id')
+      .limit(pageSize)
+      .offset(offset);
+
+    // Get total count of non-admin companies
+    const totalCountResult = await db('company_details')
+      .where('is_admin', false)
+      .whereNull('project')
+      .count('id as count')
+      .first();
+    const totalCount = parseInt(totalCountResult.count);
+
+    // Send response
+    return res.status(200).json({ companies, totalCount });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
 
 
 

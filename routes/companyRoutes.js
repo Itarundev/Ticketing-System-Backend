@@ -6,6 +6,8 @@ const companyController = require('../controller/companyController');
 router.post('/register', companyController.createCompany);
 // Getting all the companies
 router.get('/get-all-companies', companyController.getNonAdminCompanies);
+// Getting all the Employees
+router.get('/get-all-employees', companyController.getAllEmployees);
 // Login in a company 
 router.post('/login', companyController.login);
 // Deleting a company
