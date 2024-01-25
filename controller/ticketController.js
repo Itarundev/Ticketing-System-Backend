@@ -20,7 +20,6 @@ const createTicket = async (req, res) => {
     } = req.body;
     const images = req.files;
 
-   ;
     //   // Check if all required fields are provided
     if (
       !support_type ||
@@ -36,8 +35,6 @@ const createTicket = async (req, res) => {
     const authHeader = req.headers.authorization;
     const token = authHeader?.split(" ")[1] ?? "";
     const decoded = jwt.verify(token, JWT_SECRET);
-
-
 
     //     // Create ticket
     const ticket = {
@@ -62,11 +59,11 @@ const createTicket = async (req, res) => {
       .select("email")
       .where("project", project_name);
 
-      console.log("companyEmail", companyEmail);
-      
+    console.log("companyEmail", companyEmail);
+
     const emailTransporter = createEmailTransporter(
       process.env.SUPPORT_EMAIL,
-      process.env.SUPPORT_EMAIL_PASSWORD
+      process.env.SUPPORT_EMAIL_PASSWORD,
     );
 
     const values = {
@@ -353,7 +350,7 @@ const getTickets = async (req, res) => {
       .orderBy("created_at", "desc");
 
     // Fetch data from developers_list table and wait for the result
-    const developers = await db('developers_list').select('*');
+    const developers = await db("developers_list").select("*");
 
     // Send the tickets, count, and developers in the response
     return res.status(200).json({ tickets, count, developers });
@@ -447,6 +444,25 @@ const getDistinctSupportTypes = async (req, res) => {
   }
 };
 
+const getTotalTicketStats = async (req, res) => {
+  try {
+    // Query the database for ticket history records
+    const result = await db.raw(`SELECT project_name, COUNT(id) AS total_tickets, COUNT(DISTINCT CASE WHEN status != 'Resolved' THEN id END) AS open_tickets, COUNT(DISTINCT CASE WHEN status = 'Resolved' THEN id END) AS closed_tickets
+  FROM
+    tickets
+  GROUP BY
+    project_name;`);
+
+    // Send the result in the response
+    return res.status(200).json({ ticketStats: result.rows });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ error: "An error occurred while getting ticket stats" });
+  }
+};
+
 // Getting all the sub-categories
 
 async function getSubcategories(req, res) {
@@ -503,4 +519,5 @@ module.exports = {
   getSubcategories,
   getFacingIssues,
   getTickets,
+  getTotalTicketStats
 };

@@ -36,6 +36,9 @@ router.get('/subcategories', ticketController.getSubcategories);
 // Get all facing-issue-on
 router.get('/facing-issues', ticketController.getFacingIssues);
 
+// Get all ticket stats
+router.get('/stats', ticketController.getTotalTicketStats);
+
 
 
 
