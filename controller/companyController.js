@@ -147,9 +147,9 @@ const getAllEmployees = async (req, res) => {
 
     // Check if user is admin or not
     const isAdmin = decoded.company.is_admin;
-    if (!isAdmin) {
-      return res.status(403).json({ message: 'Unauthorized access' });
-    }
+    // if (!isAdmin) {
+    //   return res.status(403).json({ message: 'Unauthorized access' });
+    // }
 
     // Get page and page size from query parameters
     const page = parseInt(req.query.page) || 1;
