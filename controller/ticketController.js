@@ -247,7 +247,10 @@ const getTickets = async (req, res) => {
 
     if (!decoded.company.is_admin) {
       ticketsQuery = ticketsQuery
-        .where("tickets.created_by_id", decoded.company.id)
+        .where((builder) => {
+          builder.where("tickets.created_by_id", decoded.company.id)
+            .orWhere("tickets.assigned_to", decoded.company.brand_name);
+        })
         .where((builder) => {
           Object.entries(filters).forEach(([key, value]) => {
             builder.whereRaw(`lower(${key}) like ?`, [
@@ -256,6 +259,7 @@ const getTickets = async (req, res) => {
           });
         });
     }
+    
 
     if (decoded.company.is_admin && Object.keys(filters).length > 0) {
       ticketsQuery = ticketsQuery.where((builder) => {
