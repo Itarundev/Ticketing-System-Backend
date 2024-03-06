@@ -24,7 +24,7 @@ app.use("/api", companyRoutes);
 app.use("/api", ticketRoutes);
 
 cron.schedule(
-  "0 8 * * *",
+  "30 10 * * *",
   async () => {
     try {
       const emailTransporter = createEmailTransporter(
